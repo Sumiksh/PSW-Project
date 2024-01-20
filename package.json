@@ -1,0 +1,14 @@
+{
+  "name": "psw-project",
+  "version": "1.0.0",
+  "description": "- importing app because app.js is seperate file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
