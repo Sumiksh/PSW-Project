@@ -10,10 +10,30 @@ export async function registerUsers(email, password, password2) {
         password: password,
         password2: password2
     };
-
     const secret = SECRET_KEY;
     const token = jwt.sign(payload, secret, { expiresIn: '1h' });
     console.log(token);
+
+    try {
+        // Modify this URL to the actual endpoint UJ Path
+        const response = await fetch('', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ token })
+        });
+        const responseData = await response.json();
+        if (response.ok) {
+            console.log('User registration successful', responseData);
+        } else {
+            console.log('User registration failed', responseData);
+        }
+    } catch (error) {
+        console.error('Error during user registration', error);
+    }
+
 }
 
 
@@ -24,5 +44,5 @@ export async function registerUsers(email, password, password2) {
 // Clear the displayText.
 // Reset currentIndex to 0.
 // Update currentWordIndex to move to the next word in the words array (with wrapping around to the first word using (prevIndex + 1) % words.length).
-// Here, we return a cleanup function that clears the interval when the component unmounts or when any of the dependencies 
+// Here, we return a cleanup function that clears the interval when the component unmounts or when any of the dependencies
 // (currentWord, currentIndex, currentWordIndex, isWordDisplayed, words) change.
