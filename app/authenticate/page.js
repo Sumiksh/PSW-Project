@@ -11,18 +11,17 @@ export async function registerUsers(email, password, password2) {
         password2: password2
     };
     const secret = SECRET_KEY;
-    const token = jwt.sign(payload, secret, { expiresIn: '1h' });
-    console.log(token);
+    //const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+    //console.log(token);
 
     try {
         // Modify this URL to the actual endpoint UJ Path
-        const response = await fetch('', {
+        const response = await fetch('localhost:8080/v1/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ token })
+            body: JSON.stringify({ payload })
         });
         const responseData = await response.json();
         if (response.ok) {
