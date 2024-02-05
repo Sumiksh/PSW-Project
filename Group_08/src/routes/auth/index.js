@@ -38,7 +38,7 @@ router.post('/login', jsonBody(), (req, res) => {
 
 router.post('/register', jsonBody(), async (req, res) => {
   try {
-    const { email, password, fname, lname, isPSW } = req.body;
+    const { email, password, firstName, lastName, PSW } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -54,9 +54,9 @@ router.post('/register', jsonBody(), async (req, res) => {
     const newUser = new User({
       email,
       password: hashedPassword,
-      fname,
-      lname,
-      isPSW,
+      firstName,
+      lastName,
+      PSW,
     });
 
     newUser.save().then((user) => {
