@@ -1,29 +1,34 @@
 import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = '123456789'; // Should be a long, random string in a real application
+//const SECRET_KEY = '123456789'; // Should be a long, random string in a real application
 
-export async function registerUsers(email, password, password2) {
-    console.log(email, password, password2);
+export async function registerUsers(email, password, firstName, lastName, PSW) {
+    console.log("will send:",email, password, firstName, lastName, PSW);
 
     const payload = {
         email: email,
         password: password,
-        password2: password2
+        firstName: firstName,
+        lastName: lastName,
+        PSW: PSW
     };
-    const secret = SECRET_KEY;
+    //const secret = SECRET_KEY;
     //const token = jwt.sign(payload, secret, { expiresIn: '1h' });
     //console.log(token);
 
     try {
         // Modify this URL to the actual endpoint UJ Path
-        const response = await fetch('localhost:8080/v1/login', {
+        //http://localhost:8080/v1
+        const response = await fetch('http://localhost:8080/v1/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ payload })
+            body: JSON.stringify( payload)
         });
         const responseData = await response.json();
+        //const responseData = await response.text();
+        //console.log(responseData);
         if (response.ok) {
             console.log('User registration successful', responseData);
         } else {

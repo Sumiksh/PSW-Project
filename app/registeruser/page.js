@@ -45,7 +45,10 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react"; 
 export default function Register() {
   const [warning, setWarning] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [PSW, setPSW] = useState(false);
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const colorArray = ['warning', 'primary', 'success','danger','info','secondary'];
@@ -69,7 +72,7 @@ export default function Register() {
     e.preventDefault();
 
     try {
-        await registerUsers(email, password, password2);
+        await registerUsers(email, password, firstName, lastName, PSW);
         //router.push("/authenticate");
     } catch (err) {
       setWarning(err.message);
@@ -77,12 +80,20 @@ export default function Register() {
   }
 
   return (
-    <div className={`p-5`}>
+    <div className={`p-5`} style={{ width: '30%' }}>
       <Card bg="dark"  className={`border border-${currentBordercolor} p-3`}>
         <Card.Body style={{color:"white"}}><h2>Register:</h2>Register as a new user to avail our services:</Card.Body>
       </Card>
       <br />
       <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>First Name</Form.Label><Form.Control type="string" value={firstName} id="fname" name="fname" onChange={(e) => setFirstName(e.target.value)}/>
+        </Form.Group>
+        <br />
+        <Form.Group>
+          <Form.Label>Last Name</Form.Label><Form.Control type="string" value={lastName} id="lname" name="lname" onChange={(e) => setLastName(e.target.value)}/>
+        </Form.Group>
+        <br />
         <Form.Group>
           <Form.Label>Email:</Form.Label><Form.Control type="email" value={email} id="useremail" name="useremail" onChange={(e) => setEmail(e.target.value)}/>
         </Form.Group>
@@ -94,9 +105,9 @@ export default function Register() {
         {warning && (<><br /><Alert variant="danger">{warning}</Alert></>)}
         <br />
         <Form.Group>
-            <Form.Label>Confirm Password:</Form.Label><Form.Control type="password" value={password2} id="password2" name="password2" onChange={(e) => setPassword2(e.target.value)}/>
+          <Form.Check label="Is PSW" type="checkbox" value={PSW} id="ispsw" name="ispsw" onChange={(e) => setPSW(e.target.checked)}/>
         </Form.Group>
-        <br/>
+        <br />
         <Button variant="dark" className="pull-right" type="submit">Register</Button>
       </Form>
     </div>
